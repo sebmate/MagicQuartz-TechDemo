@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name MagicQuartzParts)(type Legacy)(uri ${KIPRJMOD}/MagicQuartzParts.lib)(options "")(descr ""))
+  (lib (name MagicQuartz-Mega-rescue)(type Legacy)(uri ${KIPRJMOD}/MagicQuartz-Mega-rescue.lib)(options "")(descr ""))
+)

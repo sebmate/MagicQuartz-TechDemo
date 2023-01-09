@@ -1,0 +1,90 @@
+
+(rules PCB MagicQuartz-Mega
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout on)
+    (eu.mihosoft.freerouting.autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 1)
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.6)
+    )
+  )
+  (rule
+    (width 500.0)
+    (clear 250.2)
+    (clear 250.0 (type smd_to_turn_gap))
+    (clear 62.6 (type smd_smd))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via 
+    "Via[0-1]_800:400_um-HighPower" "Via[0-1]_800:400_um" HighPower
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (via_rule
+    HighPower "Via[0-1]_800:400_um-HighPower"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 500.0)
+    )
+    (circuit 
+      (use_layer B.Cu)
+    )
+  )
+  (class "kicad_default"
+    GND +5V "Net-(U1-Pad3V3@1)" "Net-(U1-PadRST)" "Net-(U1-PadD13)" "Net-(U1-PadD29)" "Net-(U1-PadD31)" "Net-(U1-PadA6)"
+    "Net-(U1-PadA8)" "Net-(U1-PadA10)" "Net-(U1-PadA12)" "Net-(U1-PadA14)" "Net-(U1-PadD32)" "Net-(U1-PadD34)" "Net-(U1-PadD36)" "Net-(U1-PadD38)"
+    "Net-(U1-PadD40)" "Net-(U1-PadD42)" "Net-(D1-Pad3)" "Net-(D1-Pad7)" "Net-(D1-Pad8)" "Net-(D1-Pad9)" "Net-(D1-Pad10)" "Net-(D1-Pad15)"
+    +12V "Net-(U1-PadTX)" "Net-(C1-Pad1)" "Net-(C2-Pad1)" /OUT1 "Net-(C5-Pad1)" "Net-(C7-Pad1)" "Net-(R6-Pad2)"
+    "/Disp_RS" "/Disp_E" "/Disp_D4" "/Disp_D5" "/Disp_D6" "/Disp_D7" "/PWM_1" "/PWM_2"
+    "/Power_Sense" "/Btn_Left" "/Btn_Right" "/Btn_Down" "/Btn_Up" /Reserved "Net-(JP1-Pad1)" /Sensor
+    "Net-(J4-Pad2)"
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 500.0)
+    )
+    (circuit 
+      (use_layer B.Cu)
+    )
+  )
+  (class HighPower
+    GND1 +28V
+    (clearance_class HighPower)
+    (via_rule HighPower)
+    (rule
+      (width 1000.0)
+    )
+    (circuit 
+      (use_layer B.Cu)
+    )
+  )
+)

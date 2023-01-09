@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name RobotDyn)(type Eagle)(uri ${KIPRJMOD}/Libraries/robotdyn.lbr)(options "")(descr ""))
+  (lib (name MagicQuartzParts)(type KiCad)(uri ${KIPRJMOD}/MagicQuartzParts.pretty)(options "")(descr ""))
+)
