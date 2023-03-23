@@ -42,6 +42,8 @@ The table below provides an overview of all 3D-printable parts in the 3D model a
 
 While the STL files are available in the `release` folder for your convenience, they can be generated easily in OpenSCAD. Set the variable `render_components` to `false` and change the value of the variable `generate` to the respective part number. Then press F5 to preview the part, F6 to render the part, and F7 to export the STL file. Note that the rendering process may take a considerable amount of time, even on fast computers. Also note that the generated objects are already properly oriented for printing.
 
+I had some problems printing with Cura versions 5.1.1 to 5.3.0, especially with the "Back" part. The slicer created some signifcant artifacts and did not handle the text as expected (the last layer under the text was not printed as expected). I went back to 4.13.1.
+
 In addition to the table below:
 
 * Print all parts using "tree" support.
@@ -52,16 +54,18 @@ In addition to the table below:
 
 | Part Nr. | Name                   | Suggested Color | Notes / Exceptions                                                                                                       |
 |----------|------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
-| 1        | Bottom Plate           | Black           |                                                                                                                          |
-| 2        | Front Lower Part       | White           |                                                                                                                          |
-| 3        | Front Center Part      | Transparent     | Use the "lightning" infill pattern to create a beautiful crystalline appearance.                                         |
+| 1        | Bottom Plate           | Black           | May be printed without "tree" support.                                                                                   |
+| 2        | Front Lower Part       | White           | Set "Support X/Y Distance" to 1.6 mm to prevent the slicer from creating support in the air inlet.                       |
+| 3        | Front Center Part      | Transparent     | Use the "lightning" infill pattern to create a nice quartz-like :wink: appearance.                                       |
 | 4        | Front Upper Part       | White           |                                                                                                                          |
-| 5        | Cover                  | Brown           | Decorative foil may not adhere properly to the edges, so I recommend the material saver variant.                         |
-| 5        | Cover (Material Saver) | (Any)           | Cover the framework with thin cardboard (about as thick as a record sleeve) and apply decorative foil (e.g. wood grain). |
-| 6        | Foot (Print 4x)        | Silver          |                                                                                                                          |
-| 7        | Voltmeter Cover        | (Any)           |                                                                                                                          |
+| 5        | Cover                  | Brown           | Print this variant if you do not plan to apply decorative foil.                                                          |
+| 5        | Cover (Material Saver) | (Any)           | If decorative foil does not adhere properly to the edges, slightly sand down the surfaces at the edges.                  |
+| 6        | Foot (Print 4x)        | Silver          | May be printed without "brim".                                                                                           |
+| 7        | Voltmeter Cover        | As Front        |                                                                                                                          |
 | 8        | Button Assembly        | Silver          | Print with 0.1 mm or less to improve strength, do not use adhesion support (brim). Enable ironing on top layer.          |
 | 9        | Back                   | White           |                                                                                                                          |
+| 10       | Dummy sockets          | As Back         | Print without "brim".                                                                                                    |
+| 11       | Optical Sensor Case    | Black           |                                                                                                                          |
 
 #### Components
 The components to be used should be easily identifiable from the OpenSCAD and KiCad projects. For components where this is not immediately obvious, here are some details:
