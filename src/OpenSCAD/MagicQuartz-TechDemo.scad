@@ -19,7 +19,13 @@
 // | source.                                                                      |
 //  ------------------------------------------------------------------------------
 
-// Version: 1.02 (2023-03-05)
+// Cangelog:
+// ---------
+// 2023-03-08, Version 1.02:  - First published version
+// 2023-03-23, Version 1.10:  - Improved cover and other minor changes
+//                            - Increased size of cable tie holes
+//                            - Add dummy sockets (part 10)
+//                            - Add optical sensor case (part 11)
 
 $fn=64;
 
@@ -29,18 +35,20 @@ transparancy_cover = 0.5; // 0 = hidden, 0.5 = transparent, 1 = solid
 
 amplifier_type = 1; // Which amplifier to render (1 or 2)
 
-generate = 0; // Which part to render (0-9, see list below)
+generate = 0; // Which part to render (0-10, see list below)
 
-// 0 = Whole unit (for rendering only!)
-// 1 = Bottom plate
-// 2 = Front lower part
-// 3 = Front center part (transparent)
-// 4 = Front upper part
-// 5 = Cover
-// 6 = Foot (print 4 times)
-// 7 = Voltmeter cover
-// 8 = Button assembly
-// 9 = Back
+//  0 = Whole unit (for rendering only!)
+//  1 = Bottom plate
+//  2 = Front lower part
+//  3 = Front center part (transparent)
+//  4 = Front upper part
+//  5 = Cover
+//  6 = Foot (print 4 times)
+//  7 = Voltmeter cover
+//  8 = Button assembly
+//  9 = Back
+// 10 = Dummy sockets
+// 11 = Optical sensor case
 
 material_saver = true; // The effect is only visible when generating the distinct parts
 material_saver_grid_bar_step = 15; // Must touch all elements
@@ -124,13 +132,13 @@ cable_tie_width = 6;
 
 cover_top_height = 1;
 cover_edges_size = 3;
-cover_rigidity_grid_height = 6;
+cover_rigidity_grid_height = 3;
 
 // Feet:
 foot_size_x = 25;
 foot_size_z = 5;
 felt_glider_size_x = 20;
-felt_glider_size_z = 3.5;
+felt_glider_size_z = 2;
 feet_front_distance_x = 30;
 feet_front_distance_y = 30;
 feet_back_distance_x = case_size_width - transformer_pos_x;
@@ -609,7 +617,7 @@ module Mainboard(mode) {
         translate([size_x - hole_distance, size_y - hole_distance, size_z]) Screw(mode, size_z, screw_shaft_diameter);
         if(mode == 3 || mode == 4) {
             // PCBs:
-            color("Chocolate") cube([size_x, size_y, size_z]);
+            color("Green") cube([size_x, size_y, size_z]);
             translate([10, 10, size_z]) color(c = [0.2, 0.2, 0.2]) cube([2.5, 54, 12]);
             translate([10, 10, size_z + 12]) color("DarkBlue") cube([38, 54, 1.8]);
             translate([10 + 38 - 2.5, 10, size_z]) color(c = [0.2, 0.2, 0.2]) cube([2.5, 54, 12]);
@@ -1207,13 +1215,13 @@ module Front_Upper(mode) {
             
             // Add three backets to hold the front to the cover:
             translate([4, front_depth, 0]) color(color_case) cube([11, 2, front_upper_height - cover_edges_size - 0.9]);
-            translate([4, front_depth + 1.6, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
+            translate([4, front_depth + 1.9, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
             
             translate([98, front_depth, 0]) color(color_case) cube([11, 2, front_upper_height - cover_edges_size - 0.9]);
-            translate([98, front_depth + 1.6, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
+            translate([98, front_depth + 1.9, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
                 
             translate([157, front_depth, 0]) color(color_case) cube([11, 2, front_upper_height - cover_edges_size - 0.9]);
-            translate([157, front_depth + 1.6, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
+            translate([157, front_depth + 1.9, 0]) color(color_case) cube([11, 1, front_upper_height - 1.3]);
             
             color("LightGray") translate([83, 2, front_upper_height ]) linear_extrude(0.4) text("PRECISION TRUE SINE", size=6);
         }
@@ -1430,7 +1438,7 @@ module Cover(mode) {
     color(color_cover, transparancy_cover) // Make it transparent
     if (mode == 1 || mode == 4) {
         union() {
-            translate([cover_screw_distance, 10, case_bottom_height]) {
+                        translate([cover_screw_distance, 10, case_bottom_height]) {
                 cylinder(d = screw_shaft_diameter + 3, h = front_height - case_bottom_height - 0.001);
                 translate([-cover_screw_distance, -0.5, 10]) cube([cover_screw_distance, 1, front_height - case_bottom_height- 10.002]);
             }
@@ -1467,7 +1475,7 @@ module Cover(mode) {
                 
                 // Add stiffness to top side:
                 translate([-0.001, 0, front_height - cover_edges_size]) cube([case_size_width, 1, cover_edges_size]);
-                translate([-0.001, case_size_depth - 1.001, front_height - 6]) cube([case_size_width, 1, 6]);
+                translate([-0.001, case_size_depth - 1.001, front_height - cover_edges_size]) cube([case_size_width, 1, cover_edges_size]);
                 // Add some more to the top to prevent flexing:
                 //translate([0, 9.5, front_height - cover_top_height - 9.5]) cube([case_size_width, 1, 10]);
                 //translate([0, case_size_depth - 10.5, front_height - cover_top_height - 10.5]) cube([case_size_width, 1, 10]);
@@ -1484,28 +1492,38 @@ module Cover(mode) {
                 
                 //Top:
                 if (material_saver == true && generate == 5) {
-                    translate([0 - 0.001, 0, front_height - cover_top_height]) cube([case_size_width, 10, cover_top_height]);
-                    translate([0 - 0.001, case_size_depth - 10, front_height - cover_top_height]) cube([case_size_width, 10, cover_top_height]);
-                    translate([0 - 0.001, 0 , front_height - cover_top_height]) cube([10, case_size_depth, cover_top_height]);
-                    translate([case_size_width - 10 - 0.001, 0 , front_height - cover_top_height]) cube([10, case_size_depth, cover_top_height]);
+                    translate([0 - 0.001, 0, front_height - material_saver_grid_bar_height]) cube([case_size_width, 10, material_saver_grid_bar_height]);
+                    translate([0 - 0.001, case_size_depth - 10, front_height - material_saver_grid_bar_height]) cube([case_size_width, 10, material_saver_grid_bar_height]);
+                    
+                    translate([0 - 0.001, 0, front_height - material_saver_grid_bar_height]) cube([5, case_size_depth, material_saver_grid_bar_height]);
+                    translate([case_size_width - 5 - 0.001, 0 , front_height - material_saver_grid_bar_height]) cube([5, case_size_depth, material_saver_grid_bar_height]);
+                    
+                    translate([0 - 0.001 - 1, 0, front_height - material_saver_bottom_height ])  cube([case_size_width + 2, case_size_depth, material_saver_bottom_height]);
+                 
+                    translate([0 - 0.001, 0, front_height - material_saver_grid_bar_height]) {
+                    
+                        // The starting points 11.6 and 1.6 aim to center the grid.
+                        for (x = [11.6 : material_saver_grid_bar_step: case_size_width]){
+                            translate([x, 0, 0]) {
+                                 cube([material_saver_grid_bar_width, case_size_depth, material_saver_grid_bar_height]);
+                            }
+                        }
+                        for (y = [1.6 : material_saver_grid_bar_step: case_size_depth]){
+                            translate([0, y, 0]) {
+                                 cube([case_size_width, material_saver_grid_bar_width, material_saver_grid_bar_height]);
+                            }
+                        }
+                    }
+
                 } else {
                     translate([0 - 0.001, 0, front_height - cover_top_height]) cube([case_size_width, case_size_depth, cover_top_height]);
                 }
                 
-                // Sides:
+                // Sides (difficult to save material here):
                 translate([-1 - 0.001, 0, -1]) cube([1, case_size_depth, front_height + 1]);
                 translate([case_size_width + 0.001, 0, -1]) cube([1, case_size_depth, front_height + 1]);
             }
-        //}
     } 
-    
-    if (mode == 2 || mode == 4) {
-        
-        if (material_saver == true && generate == 5) {
-            translate([-10, 15, -2]) cube([case_size_width + 20, case_size_depth / 2 - 20, front_height - 5]);
-            translate([-10, 15 + case_size_depth / 2 - 20 + 10, -2]) cube([case_size_width + 20, case_size_depth / 2 - 20, front_height - 5]);
-        }
-    }
     
     // Screws:
     
@@ -1607,6 +1625,43 @@ module Buttons_Assembly() {
     if(render_components == true) Buttons(3);
 }
 
+
+
+// ========================== OTHER PARTS ==========================
+
+module Dummy_Sockets() {
+    step = 14.9;
+    union() {
+        
+        hull() {
+            translate([0, 0, -0.5])  cylinder(d=14, h=0.5);
+            translate([step * 2, 0, -0.5])  cylinder(d=14, h=0.5);
+        }
+
+        translate([0, 0, 0]) cylinder(d=13, h=3);
+        translate([step * 1, 0, 0]) cylinder(d=13, h=3);
+        translate([step * 2, 0, 0]) cylinder(d=13, h=3);
+
+        translate([0, 0, 0])  cylinder(d=7.5, h=7);
+        translate([step * 1, 0, 0]) cylinder(d=7.5, h=7);
+        translate([step * 2, 0, 0]) cylinder(d=7.5, h=7);
+    }
+}
+
+module Optical_Sensor_Half() {
+    difference() {
+        cube([23, 20, 8.5/2]); // Case
+        translate([2, -0.001, .5]) cube([7.5, 6, 7.5]); // CNY70
+        translate([2, 2, .5]) cube([23-4, 20-4, 8.5/2]); // Inner space
+        translate([23/2, 20, 8.5/2]) rotate([90,0,0]) cylinder(d=4.5, h=7, center = true); // Cable
+    }
+}
+
+module Optical_Sensor() {
+    Optical_Sensor_Half();
+    translate([48, 0, 0]) mirror([1, 0, 0]) Optical_Sensor_Half();
+}
+
 // ========================== PARTS GENERATION ==========================
 
 if (generate == 0) { // Whole unit
@@ -1659,4 +1714,14 @@ if (generate == 0) { // Whole unit
    
     translate([0, 0, -case_size_depth]) rotate([90, 0, 0]) Back_Assembly();
 
+} else if (generate == 10) { // Dummy Sockets
+   
+   Dummy_Sockets();
+
+} else if (generate == 11) { // Optical Sensor
+   
+   Optical_Sensor();
+
 }
+
+//Mainboard(3);
