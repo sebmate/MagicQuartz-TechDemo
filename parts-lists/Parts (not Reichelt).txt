@@ -1,0 +1,22 @@
+The mainboard (KiCad part of this repository)
+DC Powersupply (e.g., 24V/2A, fully isolated)
+Display (2 lines by 16 characters, HD44780 or compatible)
+Voltmeter (Type "YB27A", 60-300V AC)
+Amplifier (see README.md)
+DC/DC down converter(s) (based on LM259S)
+Cable ties
+Screws: 2.9x9.5 mm (x31)
+        2.2x9.5 mm (x8)
+Power Switch (type "KCDI-101")
+DC power jack(s) (2.5x5.5 mm, 1-3x)
+Headphone jack(s) (3.5 mm , 1-2x)
+3.5 mm heaphone cable (for the optical sensor)
+Strong, small magnet(s) (for optical sensor enclosure)
+AC out cable (with outlet, to connect the turntable)
+Wires (for signals and power, e.g., 26 AWG and 20 AWG)
+Two paired screw terminal
+Wire end ferrules
+Materials for the 3D-printer
+Decorative foil
+Glue, hot glue
+Felt gliders (20 mm, 4x)
