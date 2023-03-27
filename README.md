@@ -56,7 +56,7 @@ In addition to the table below:
 |----------|------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
 | 1        | Bottom Plate           | Black           | May be printed without "tree" support.                                                                                   |
 | 2        | Front Lower Part       | White           | Set "Support X/Y Distance" to 1.6 mm to prevent the slicer from creating support in the air inlet.                       |
-| 3        | Front Center Part      | Transparent     | Use the "lightning" infill pattern to create a nice quartz-like :wink: appearance.                                       |
+| 3        | Front Center Part      | Transparent     | Use the "lightning" infill pattern to create a nice "quartz-like" appearance.                                            |
 | 4        | Front Upper Part       | White           |                                                                                                                          |
 | 5        | Cover                  | Brown           | Print this variant if you do not plan to apply decorative foil.                                                          |
 | 5        | Cover (Material Saver) | (Any)           | If decorative foil does not adhere properly to the edges, slightly sand down the surfaces at the edges.                  |
@@ -98,9 +98,24 @@ The electronic circuit is very simple and should be self-explanatory. However, t
 
 ### Block Diagram
 
-Finally, here is a block diagram that provides an overview of all internal connections:
+Here is a block diagram that provides an overview of all internal connections:
 
 ![MagicQuartz TechDemo Block Diagram](images/Block-Diagram.png)
+
+## Parts Lists
+
+Parts lists are available in the directory `parts-lists`.
+
+One of the lists is for the German electronics distributor Reichelt. This list can also be accessed directly via this link: [https://www.reichelt.de/my/2038407](https://www.reichelt.de/my/2038407). Please note that I am not affiliated with Reichelt and am only providing this list for your convenience. The parts may be available from other vendors at a lower price.
+
+## Assembly Notes
+
+* Assume that the assembly will take about two evenings, once you have all parts are in place.
+* The combination of mainboard and display can be fully tested without anything else being connected to it (such as the cabling to the rear panel, the amplifier, the DC/DC converter). This works by powering the "MEGA 2560 PRO" board via USB.
+* Manual wiring of the display is very time-consuming. You may prefer to use a connector-based solution. Note that not all 16 display lines are required.
+* Before connecting and powering the mainboard and the fans via the DC/DC converters, it is essential to set the voltages on them beforehand (e.g., to 7 V, as described above).
+* The specified screw for the fuse holder may be too long and may break through the rear panel. If necessary, use a shorter one.
+* Pictures of an assembled device are available in the `images` folder.
 
 ## Initialization Procedure
 
