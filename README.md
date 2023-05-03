@@ -6,7 +6,7 @@
 
 This repository contains an open source hardware design of a turntable speedbox that is capable of running the [MagicQuartz](https://www.mate-labs.de/magicquartz) firmware.
 
-The speedbox implements a simple AC inverter (based on a class D audio amplifier and a toroidal transformer) and changes the generated AC frequency to control the speed of the record player. Using an optical sensor, the speed of the turntable can be measured and a continuously corrected AC frequency can be generated. Note that this approach only works for record players with AC motors ( please refer to the MagicQuartz documentation for details).
+The speedbox implements a simple AC inverter (based on a class D audio amplifier and a toroidal transformer) and changes the generated AC frequency to control the speed of the record player. Using an optical sensor, the speed of the turntable can be measured and a continuously corrected AC frequency can be generated. Note that this approach only works for record players with AC motor (please refer to the MagicQuartz documentation for details).
 
 The hardware design consists of two parts:
 
