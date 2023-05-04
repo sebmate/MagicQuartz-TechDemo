@@ -56,20 +56,21 @@ In addition to the table below:
 * Print all parts with with adhesion type "brim" (except part 8, see notes).
 
 
-| Part Nr. | Name                   | Suggested Color | Notes / Exceptions                                                                                                       |
-|----------|------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
-| 1        | Bottom Plate           | Black           | May be printed without "tree" support.                                                                                   |
-| 2        | Front Lower Part       | White           | Set "Support X/Y Distance" to 1.6 mm to prevent the slicer from creating support in the air inlet.                       |
-| 3        | Front Center Part      | Transparent     | Use the "lightning" infill pattern to create a nice "quartz-like" appearance.                                            |
-| 4        | Front Upper Part       | White           |                                                                                                                          |
-| 5        | Cover                  | Brown           | Print this variant if you do not plan to apply decorative foil.                                                          |
-| 5        | Cover (Material Saver) | (Any)           | If decorative foil does not adhere properly to the edges, slightly sand down the surfaces at the edges.                  |
-| 6        | Foot (Print 4x)        | Silver          | May be printed without "brim".                                                                                           |
-| 7        | Voltmeter Cover        | As Front        |                                                                                                                          |
-| 8        | Button Assembly        | Silver          | Print with 0.1 mm or less to improve strength, do not use adhesion support (brim). Enable ironing on top layer.          |
-| 9        | Back                   | White           |                                                                                                                          |
-| 10       | Dummy sockets          | As Back         | Print without "brim".                                                                                                    |
-| 11       | Optical Sensor Case    | Black           |                                                                                                                          |
+| Part Nr. | Name                          | Suggested Color | Notes / Exceptions                                                                                                       |
+|----------|-------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
+| 1        | Bottom Plate                  | Black           | May be printed without "tree" support.                                                                                   |
+| 1        | Bottom Plate (Material Saver) | Black           | Saves some filament, but is less sturdy. May be printed without "tree" support.                                          |
+| 2        | Front Lower Part              | White           | Set "Support X/Y Distance" to 1.6 mm to prevent the slicer from creating support in the air inlet.                       |
+| 3        | Front Center Part             | Transparent     | Use the "lightning" infill pattern to create a nice "quartz-like" appearance.                                            |
+| 4        | Front Upper Part              | White           |                                                                                                                          |
+| 5        | Cover                         | Brown           | Print this variant if you do not plan to apply decorative foil.                                                          |
+| 5        | Cover (Material Saver)        | (Any)           | If decorative foil does not adhere properly to the edges, slightly sand down the surfaces at the edges.                  |
+| 6        | Foot (Print 4x)               | Silver          | May be printed without "brim".                                                                                           |
+| 7        | Voltmeter Cover               | As Front        |                                                                                                                          |
+| 8        | Button Assembly               | Silver          | Print with 0.1 mm or less to improve strength, do not use adhesion support (brim). Enable ironing on top layer.          |
+| 9        | Back                          | White           |                                                                                                                          |
+| 10       | Dummy sockets                 | As Back         | Print without "brim".                                                                                                    |
+| 11       | Optical Sensor Case           | Black           |                                                                                                                          |
 
 #### Components
 The components to be used should be easily identifiable from the OpenSCAD and KiCad projects. For components where this is not immediately obvious, here are some details:
@@ -114,11 +115,11 @@ One of the lists is for the German electronics distributor Reichelt. This list c
 
 ## Assembly Notes
 
-* Assume that the assembly will take about two evenings, once you have all parts are in place.
+* Assume that the assembly will take about two evenings, once you have all parts in place.
 * The combination of mainboard and display can be fully tested without anything else being connected to it (such as the cabling to the rear panel, the amplifier, the DC/DC converter). This works by powering the "MEGA 2560 PRO" board via USB.
 * Manual wiring of the display is very time-consuming. You may prefer to use a connector-based solution. Note that not all 16 display lines are required.
 * Before connecting and powering the mainboard and the fans via the DC/DC converters, it is essential to set the voltages on them beforehand (e.g., to 7V, as described above).
-* The specified screw for the fuse holder may be too long and may break through the rear panel. If necessary, use a shorter one.
+* The specified screw for the fuse holder may be too long and may break through the rear panel. Be careful when mounting the fuse holder and consider using a shorter screw.
 * Pictures of an assembled device are available in the `images` folder.
 
 ## Initialization Procedure
