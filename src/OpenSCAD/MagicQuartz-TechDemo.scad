@@ -26,6 +26,7 @@
 //                            - Increased size of cable tie holes
 //                            - Add dummy sockets (part 10)
 //                            - Add optical sensor case (part 11)
+// 2023-03-23, Version 1.20:  - Added second fuse holder to back
 
 $fn=64;
 
@@ -499,7 +500,7 @@ module Two_Line_Display(mode) {
             color("SeaGreen") cube([pcb_size_x, pcb_size_y, pcb_size_z]);
             color("White") translate([3, 5, pcb_size_z]) cube([display_frame_size_x, display_frame_size_y, display_frame_size_z]);
             color("GreenYellow") translate([8, 10, pcb_size_z + display_frame_size_z + 0.02]) cube([64.5, 15, 0.01]);
-            color("DarkBlue") translate([8.5, 10 + 8, pcb_size_z + display_frame_size_z + 0.02]) linear_extrude(0.3) text("33 T 33.3333 RPM", font = "DejaVu Sans Mono:style=Bold", size=4.8);
+            color("DarkBlue") translate([8.5, 10 + 8, pcb_size_z + display_frame_size_z + 0.02]) linear_extrude(0.1) text("33 T 33.3333 RPM", font = "DejaVu Sans Mono:style=Bold", size=4.8);
             color("DarkBlue") translate([8.5, 10 + 2, pcb_size_z + display_frame_size_z + 0.02]) linear_extrude(0.1) text("M CQ 50.0000 Hz", font = "DejaVu Sans Mono:style=Bold", size=4.8);
         }
    
@@ -1371,7 +1372,8 @@ module Back(mode) {
     translate([fan_pos_x, -4, fan_pos_z]) rotate([90, 0, 0]) Fan(mode);
     //translate([105 + 3, -4, 34]) rotate([90, 0, 0]) Fan(mode);  
  
-    translate([98, 0, 44]) rotate([-90, 0, 0]) Fuse_Holder(mode);
+    translate([98, 0, 38]) rotate([-90, 0, 0]) Fuse_Holder(mode);
+    translate([98, 0, 50]) rotate([-90, 0, 0]) Fuse_Holder(mode);
     
     translate([0, -back_depth, 0]) translate([-1, 0, -1]) translate([connection_terminal_pos_x, -0.01, connection_terminal_pos_z]) translate([2.5, 3, 2.5])
         translate([2.5, 0, 2.5]) {
