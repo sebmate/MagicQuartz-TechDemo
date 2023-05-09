@@ -30,7 +30,7 @@ There are several serious dangers associated with building and operating this de
 * The device creates an [IT network (isolé-terre)](https://en.wikipedia.org/wiki/Earthing_system#IT_network). This has implications on the number of appliances (i.e. motors or turntables) and their insulation type to be safely connected to the device.
 * Be very careful when performing measurements! Do not attempt to measure the high-voltage side of the transformer using an oscilloscope! There is no need to do this as the signal can be fully verified on the low-voltage side. In this regard, also note that the digital amplifier's negative outputs are not connected to ground. There is a serious risk of damaging the oscilloscope and other equipment when performing measurements while the circuit is grounded, e.g. over the Arduino's USB port and a PC. Use galvanic isolators where applicable.
 * There is a serious risk that the device damages connected components. Examples are strobe lamps, which may be damaged easily by voltage spikes or excessive voltage, or fixed-frequency AC motors that rely on phase shift capacitors. There is also a risk that the PWM carrier signal passes through the audio path of a stereo system and damages the speakers. In addition, note that although software-side pop suppression is used, a voltage spike may occur when the device is turned on.
-* In the event of a hardware failure, other possible consequential damage may occur that was not known or considered during design. Previous experience is discussed in the section "Known Issues".
+* The individual modules (in particular, the amplifier and the microcontroller board) may integrate electronic components from different manufacturers and of varying quality (see the discussion regarding the AMS1117 voltage regulator in section "Known Issues"). In the event of a hardware failure, this can lead to further unforeseeable consequential damage. The assembled device should therefore never be operated unattended.
 * Note that the mechanical, electrical, and chemical properties of 3D-printed components may change or deteriorate over time.
 
 ### OpenSCAD 3D Model
@@ -108,7 +108,14 @@ Here is a block diagram that provides an overview of all internal connections:
 
 ## Known Issues
 
-* **AMS1117 Failure**: The "MEGA 2560 PRO" board uses an AMS1117 5V voltage regulator which can develop an internal short circuit and as a result pass the external DC/DC converter voltage (as described above, typically 7.5V) to the rest of the circuit. This may not only damage the other components (including the ATmega2560), it also increases the level of the sinusoidal signal generated. Consequently, the inverter may generate too high a voltage and damage the turntable. The problem may be mitigated by connecting a 5.1V zener diode between GND and 5V (see [images/Zener-Diode-Protection.png](images/Zener-Diode-Protection.png)) and adding a fuse between the DC/DC converter and the motherboard. At full load (i.e. when the optical sensor is connected), the mainboard draws about 100mA at 7.5V. The fuse should be sized accordingly (100mA, fast). If the AMS1117 fails and passes a higher voltage to the 5V rail, the zener diode limits this voltage to 5.1V and passes the excess current to GND, causing the fuse to blow.
+### AMS1117 Voltage Regulator
+The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questionable quality, see [Note: Linear Regulator Woes – When is an AMS1117 not an AMS1117?](https://goughlui.com/2021/03/27/note-linear-regulator-woes-when-is-an-ams1117-not-an-ams1117). It may develop an internal short and pass the input voltage (as described above, typically 7.5V) to the rest of the circuit. This may not only damage the other components (including the ATmega2560), it also increases the level of the sinusoidal signal generated. Consequently, the inverter may generate too high a voltage and damage the turntable.
+
+The problem can possibly be solved by one of the following approaches:
+
+* Replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM 1117 by Texas Instruments), purchased from a reputable electronics distributor. An additional 10uF tantalum capacitor may also be connected to the output of the voltage regulator.
+* Supplying the 5V voltage for the "MEGA 2560 PRO" board from an external voltage converter, such as the second DC/DC converter.
+* Connecting a 5.1V zener diode between GND and 5V (see [images/Zener-Diode-Protection.png](images/Zener-Diode-Protection.png)) and adding a fuse between the DC/DC converter and the motherboard. At full load (i.e. when the optical sensor is connected), the mainboard draws about 100mA at 7.5V. The fuse should be sized accordingly (100mA, fast). If the AMS1117 fails and passes a higher voltage to the 5V rail, the zener diode limits this voltage to 5.1V and passes the excess current to GND, causing the fuse to blow.
 
 ## Parts Lists
 
