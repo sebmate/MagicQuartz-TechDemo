@@ -113,9 +113,9 @@ The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questiona
 
 The problem can possibly be solved by one of the following approaches:
 
-* Replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM 1117 by Texas Instruments), purchased from a reputable electronics distributor. An additional 10uF tantalum capacitor may also be connected to the output of the voltage regulator.
-* Supplying the 5V voltage for the "MEGA 2560 PRO" board from an external voltage converter, such as the second DC/DC converter.
-* Connecting a 5.1V zener diode between GND and 5V (see [images/Zener-Diode-Protection.png](images/Zener-Diode-Protection.png)) and adding a fuse between the DC/DC converter and the motherboard. At full load (i.e. when the optical sensor is connected), the mainboard draws about 100mA at 7.5V. The fuse should be sized accordingly (100mA, fast). If the AMS1117 fails and passes a higher voltage to the 5V rail, the zener diode limits this voltage to 5.1V and passes the excess current to GND, causing the fuse to blow.
+* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. An additional 10uF tantalum capacitor may also be connected to the output of the voltage regulator.
+* By supplying the 5V voltage for the "MEGA 2560 PRO" board from an external voltage converter, such as the second DC/DC converter.
+* By connecting a 5.1V zener diode between GND and 5V (see [images/Zener-Diode-Protection.png](images/Zener-Diode-Protection.png)) and adding a fuse between the DC/DC converter and the motherboard  ("Fuse 2" in the block diagram above). At full load (i.e. when the optical sensor is connected), the mainboard draws about 100mA at 7.5V. The fuse should be sized accordingly (100mA, fast). If the AMS1117 fails and passes a higher voltage to the 5V rail, the zener diode limits this voltage to 5.1V and passes the excess current to GND, causing the fuse to blow.
 
 *Note: This is currently work in progress.*
 
