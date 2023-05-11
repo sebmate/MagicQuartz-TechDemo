@@ -54,7 +54,6 @@ In addition to the table below:
 * Print all parts with with 0.2 mm layer height (except part 8, see notes).
 * Print all parts with with adhesion type "brim" (except part 8, see notes).
 
-
 | Part Nr. | Name                          | Suggested Color | Notes / Exceptions                                                                                                       |
 |----------|-------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------|
 | 1        | Bottom Plate                  | Black           | May be printed without "tree" support.                                                                                   |
@@ -95,7 +94,7 @@ The mainboard is build around the "MEGA 2560 PRO" board (denoted U1 in the schem
 The electronic circuit is very simple and should be self-explanatory. However, the following points explain some special aspects:
 
 * **Power Supply:** Connector J2 ("Power") is used to power the mainboard from an external power source via pins 2 and 3 (typically 24-32V, depending on the voltage requirements of the amplifier, denoted "+28V" in the schematic). Connector J2 is also used to power the amplifier board via pins 1 and 4. Notice that pin 1 of J2 is connected to a second ground (GND1), which is used to measure the amplifier current (see below).
-* **DC/DC Converter Boards:** As described above, the mainboard is supplied with 24-32V (labeled "+28V"). The U1 board, however, requires a voltage between 7-12V (typically 7.5V, labeled "+12V"). Because it is not practical to overcome the large voltage difference with a linear regulator, connector J3 ("DC/DC") can be used to connect an external DC/DC step-down converter board (see OpenSCAD design). U1 then uses its on-board linear voltage regulator (AMS1117) to create the 5V. The enclosure can accommodate a second DC/DC converter board specifically to power the fans; however, if the fans run well with the voltage from the first board, they can also be connected to this first converter board.
+* **DC/DC Converter Boards:** As described above, the mainboard is supplied with 24-32V (labeled "+28V"). The U1 board, however, requires a voltage between 7V and 12V (using 7V is recommended, labeled "+12V"). Because it is not practical to overcome the large voltage difference with a linear regulator, connector J3 ("DC/DC") can be used to connect an external DC/DC step-down converter board (see OpenSCAD design). U1 then uses its on-board linear voltage regulator (AMS1117) to create the 5V. The enclosure can accommodate a second DC/DC converter board specifically to power the fans; however, if the fans run well with the voltage from the first board, they can also be connected to this first converter board.
 * **Jumper "Enable APM":** Digital pin D27 of U1 can be pulled to GND (jumper J1 "Enable APM" is closed) to tell the firmware that the current sensing circuit is available, which allows the firmware to detect whether the turntable motor is currently powered or not.
 * **Current Measurement:** The current measurement works as follows: The current of the power section (the digital amplifier board) is measured via the voltage drop across resistor R4 (0.15 Ohm, 5 Watt). The measured voltage is low-pass filtered via C7 and R5 and brought via U2A to a voltage level that can be easily measured by the microcontoller's ADC. 
 * **Low-Pass Filter:** The PWM low-pass filter section converts the PWM signals from the microcontroller into one or two analog sine waves using simple RC filters. The filters are designed to have a cutoff frequency of about 200 Hz, which is high enough to pass any of the possible AC frequencies but block the PWM carrier signal. The filter is implemented twice in case a dual-phase inverter is to be implemented (which requires an additional transformer and a different enclosure). For single-phase configurations, it is recommended to equip only one filter section and bridge the two channels at the input of the amplifier. This eliminates the risk of damaging the amplifier if the user accidentally changes the phase shift in the firmware.
@@ -109,13 +108,13 @@ Here is a block diagram that provides an overview of all internal connections:
 ## Known Issues
 
 ### AMS1117 Voltage Regulator
-The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questionable quality (see [this interesting blog post](https://goughlui.com/2021/03/27/note-linear-regulator-woes-when-is-an-ams1117-not-an-ams1117)). The regulator may develop an internal short and pass the input voltage (as described above, typically 7.5V) to the rest of the circuit. This may not only damage the other components (including the ATmega2560), it also increases the level of the sinusoidal signal generated. Consequently, the inverter may generate too high a voltage and damage the turntable.
 
-The problem can possibly be solved by one of the following approaches:
+The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questionable quality (see [this](https://goughlui.com/2021/03/27/note-linear-regulator-woes-when-is-an-ams1117-not-an-ams1117) interesting blog post). The regulator may fail with a full or partial internal short and pass the input voltage (7V) to the rest of the circuit. This may not only damage the other components (including the ATmega2560), it may also increase the level of the sinusoidal signal generated. As a result, the inverter may generate excessive voltage and damage the turntable.
 
-* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. An additional 10uF tantalum capacitor may also be connected to the output of the voltage regulator.
-* By supplying the 5V voltage for the "MEGA 2560 PRO" board from an external voltage converter, such as the second DC/DC converter.
-* By connecting a 5.1V zener diode between GND and 5V (see [images/Zener-Diode-Protection.png](images/Zener-Diode-Protection.png)) and adding a fuse between the DC/DC converter and the motherboard  ("Fuse 2" in the block diagram above). At full load (i.e. when the optical sensor is connected), the mainboard draws about 100mA at 7.5V. The fuse should be sized accordingly (100mA, fast). If the AMS1117 fails and passes a higher voltage to the 5V rail, the zener diode limits this voltage to 5.1V and passes the excess current to GND, causing the fuse to blow.
+The problem may be solved via these approaches:
+
+* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (please refer to its datasheet), an additional 10uF tantalum capacitor may be added to its output, for example by using the free GND and 5V pins next to the AMS1117 on the "MEGA 2560 PRO" board.
+* By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02).
 
 *Note: This is currently work in progress.*
 
@@ -123,7 +122,7 @@ The problem can possibly be solved by one of the following approaches:
 
 Parts lists are available in the directory `parts-lists`.
 
-One of the lists is for the German electronics distributor Reichelt. This list can also be accessed directly via this link: [https://www.reichelt.de/my/2038407](https://www.reichelt.de/my/2038407). Please note that I am not affiliated with Reichelt and am only providing this list for your convenience. The parts may be available from other vendors at a lower price.
+One of the lists is for the German electronics distributor Reichelt. This list can also be accessed directly via this link: [https://www.reichelt.de/my/2038407](https://www.reichelt.de/my/2038407). This list also contains alternative parts that are not essential. The list should therefore not be ordered blindly. Please note that I am not affiliated with Reichelt and am only providing this list for your convenience. The parts may be available from other vendors at a lower price.
 
 ## Assembly Notes
 
