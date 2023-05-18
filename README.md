@@ -30,7 +30,7 @@ There are several serious dangers associated with building and operating this de
 * The device creates an [IT network (isolé-terre)](https://en.wikipedia.org/wiki/Earthing_system#IT_network). This has implications on the number of appliances (i.e. motors or turntables) and their insulation type to be safely connected to the device.
 * Be very careful when performing measurements! Do not attempt to measure the high-voltage side of the transformer using an oscilloscope! There is no need to do this as the signal can be fully verified on the low-voltage side. In this regard, also note that the digital amplifier's negative outputs are not connected to ground. There is a serious risk of damaging the oscilloscope and other equipment when performing measurements while the circuit is grounded, e.g. over the Arduino's USB port and a PC. Use galvanic isolators where applicable.
 * There is a serious risk that the device damages connected components. Examples are strobe lamps, which may be damaged easily by voltage spikes or excessive voltage, or fixed-frequency AC motors that rely on phase shift capacitors. There is also a risk that the PWM carrier signal passes through the audio path of a stereo system and damages the speakers. In addition, note that although software-side pop suppression is used, a voltage spike may occur when the device is turned on.
-* The individual modules (in particular, the amplifier and the microcontroller board) may integrate electronic components from different manufacturers and of varying quality (see the discussion regarding the AMS1117 voltage regulator in section "Known Issues"). In the event of a hardware failure, this can lead to further unforeseeable consequential damage. The assembled device should therefore never be operated unattended.
+* The individual prefabricated modules (especially the amplifier, the step-down converters and the microcontroller board) may contain electronic components from different manufacturers and of varying quality (see section "Known Issues"). In the event of a hardware failure, this can lead to further unexpected consequential damage. The assembled device should therefore never be operated unattended.
 * Note that the mechanical, electrical, and chemical properties of 3D-printed components may change or deteriorate over time.
 
 ### OpenSCAD 3D Model
@@ -79,6 +79,7 @@ The components to be used should be easily identifiable from the OpenSCAD and Ki
 * **Toroidal Transformer:** Type "RKT 5012" (50VA, 220V to 2x12V). To distribute the load across both amplifier channels, the two 12V transformer windings can be driven in parallel via the two output channels of the amplifier. It is then important to ensure that the two windings are actually driven in parallel and not in reverse. Given a connection sequence of "R+, R-, L+, L-" at the amplifier, a working wiring sequence is "red, yellow, blue, green" for the RKT 5012. Caution! During operation, the 220V tappings are live.
 * **AC Voltmeter:** Type "YB27A", 60-300V AC, removed from its original housing. Note that the voltmeter is live and there is a risk of electric shock. If the wires need to be extended or replaced, make sure they have the proper voltage rating.
 * **Power Switch:** Type "KCDI-101".
+* **DC/DC Converter Boards:** Step-down voltage regulator boards based on the LM2596S (also see "Known Issues" below).
 
 ![Amplifier Types](images/Amplifier-Types.png)
 
@@ -114,9 +115,13 @@ The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questiona
 The problem may be solved via these approaches:
 
 * By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (please refer to its datasheet), an additional 10uF tantalum capacitor may be added to its output, for example by using the free GND and 5V pins next to the AMS1117 on the "MEGA 2560 PRO" board.
-* By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02).
+* By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy).
 
 *Note: This is currently work in progress.*
+
+### LM2596S DC/DC Converter Boards
+
+These inexpensive step-down boards probably don't use original LM2596S ICs (see [this](https://k6jca.blogspot.com/2018/02/counterfeit-lm2596-regulator-boards.html) link for more information). So far, however, I have had no issues with these. The above described crowbar circuit also provides some protection against a possible failure of such an LM2596S DC/DC converter board.
 
 ## Parts Lists
 
