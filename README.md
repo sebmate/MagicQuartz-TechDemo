@@ -80,6 +80,7 @@ The components to be used should be easily identifiable from the OpenSCAD and Ki
 * **AC Voltmeter:** Type "YB27A", 60-300V AC, removed from its original housing. Note that the voltmeter is live and there is a risk of electric shock. If the wires need to be extended or replaced, make sure they have the proper voltage rating.
 * **Power Switch:** Type "KCDI-101".
 * **DC/DC Converter Boards:** Step-down voltage regulator boards based on the LM2596S (also see "Known Issues" below).
+* **Fuses**: Fuse 1 is used to protect the entire circuit and should be sized according to the implemented power rating. For example, if a 50VA transformer and a 24V power supply are used, a 2A fuse may be appropriate. Fuse 2 is used to protect the components on the "MEGA 2560 PRO" board, which draw approximately 100mA at 7V. Using a 125mA fuse is therefore reasonable.
 
 ![Amplifier Types](images/Amplifier-Types.png)
 
@@ -114,14 +115,14 @@ The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questiona
 
 The problem may be solved via these approaches:
 
-* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (please refer to its datasheet), an additional 10uF tantalum capacitor may be added to its output, for example by using the free GND and 5V pins next to the AMS1117 on the "MEGA 2560 PRO" board.
+* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (please refer to its datasheet), additional 10uF tantalum capacitors should be added to the regulator's input and output pins, for example by using the free pins (in the "second row") next to the AMS1117 on the "MEGA 2560 PRO" board.
 * By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy).
 
 *Note: This is currently work in progress.*
 
 ### LM2596S DC/DC Converter Boards
 
-These inexpensive step-down boards probably don't use original LM2596S ICs (see [this](https://k6jca.blogspot.com/2018/02/counterfeit-lm2596-regulator-boards.html) link for more information). So far, however, I have had no issues with these. The above described crowbar circuit also provides some protection against a possible failure of such an LM2596S DC/DC converter board.
+These inexpensive step-down boards probably don't use original LM2596S ICs (see [this](https://k6jca.blogspot.com/2018/02/counterfeit-lm2596-regulator-boards.html) link for more information). So far, however, I have had no issues with these. The above described crowbar circuit, when installed on the "MEGA 2560 PRO" board, also provides some protection against a possible failure of such an LM2596S DC/DC converter board.
 
 ## Parts Lists
 
@@ -136,7 +137,7 @@ One of the lists is for the German electronics distributor Reichelt. This list c
 * Manual wiring of the display is very time-consuming. You may prefer to use a connector-based solution. Note that not all 16 display lines are required.
 * Before connecting and powering the mainboard and the fans via the DC/DC converters, it is essential to set the voltages on them beforehand (e.g., to 7V, as described above).
 * The specified screw for the fuse holder may be too long and may break through the rear panel. Be careful when mounting the fuse holder and consider using a shorter screw.
-* Pictures of an assembled device are available in the `images` folder.
+* Pictures of an assembled device are available in the `images` folder. Note that these do not yet show the latest revision with the LittleJimmy circuit and the second fuse.
 
 ## Initialization Procedure
 
