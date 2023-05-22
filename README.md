@@ -80,7 +80,7 @@ The components to be used should be easily identifiable from the OpenSCAD and Ki
 * **AC Voltmeter:** Type "YB27A", 60-300V AC, removed from its original housing. Note that the voltmeter is live and there is a risk of electric shock. If the wires need to be extended or replaced, make sure they have the proper voltage rating.
 * **Power Switch:** Type "KCDI-101".
 * **DC/DC Converter Boards:** Step-down voltage regulator boards based on the LM2596S (also see "Known Issues" below).
-* **Fuses**: Fuse 1 is used to protect the entire circuit and should be sized according to the implemented power rating. For example, if a 50VA transformer and a 24V power supply are used, a 2A fuse may be appropriate. Fuse 2 is used to protect the components on the "MEGA 2560 PRO" board, which draw approximately 100mA at 7V. Using a 125mA fuse is therefore reasonable.
+* **Fuses**: Fuse 1 is covers the entire circuit and should be sized according to the implemented power rating. For example, if a 50VA transformer and a 24V power supply are used, a 2A fuse may be appropriate. Fuse 2 is used to protect the components on the "MEGA 2560 PRO" board, which draw approximately 100mA at 7V. Using a 125mA fuse is therefore reasonable.
 
 ![Amplifier Types](images/Amplifier-Types.png)
 
@@ -115,10 +115,8 @@ The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questiona
 
 The problem may be solved via these approaches:
 
-* By replacing the "AMS1117" with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (please refer to its datasheet), additional 10uF tantalum capacitors should be added to the regulator's input and output pins, for example by using the free pins (in the "second row") next to the AMS1117 on the "MEGA 2560 PRO" board.
-* By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy).
-
-*Note: This is currently work in progress.*
+* **Simple and probably sufficient:** By replacing the AMS1117 with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (see data sheet), additional 10uF tantalum capacitors may need to be added to the input and output pins of the regulator. Such a modification based on an TS1117 is shown in this image: [images/TS1117-Modification.jpg](images/TS1117-Modification.jpg). Notice the two new tantalum capacitors and the additional fuse. The old AMS1117 is easily desoldered by applying excess fresh solder to the three pins, heating it up, and then wiping it (the AMS1117) away. Carefully observe the polarity of the capacitors!
+* **More sophisticated:** By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse ("Fuse 2", 125mA, fast). The "crowbar circuit" may also be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy). *Note: The crowbar circuit is currently work in progress and has not yet been tested.*
 
 ### LM2596S DC/DC Converter Boards
 
