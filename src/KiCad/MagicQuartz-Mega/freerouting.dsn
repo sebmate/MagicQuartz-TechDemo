@@ -1050,9 +1050,6 @@
     (net GND1
       (pins R4-2 R5-2 J2-1)
     )
-    (net +28V
-      (pins J2-3 J2-4 J3-1)
-    )
     (net "Net-(JP1-Pad1)"
       (pins JP1-1 U1-D27)
     )
@@ -1061,6 +1058,9 @@
     )
     (net "Net-(J4-Pad2)"
       (pins J4-2 R8-1)
+    )
+    (net +28V
+      (pins J2-3 J2-4 J3-1)
     )
     (class kicad_default
       (circuit
@@ -1071,7 +1071,7 @@
         (clearance 250.1)
       )
     )
-    (class HighPower +28V GND1
+    (class HighPower GND1
       (circuit
         (use_via Via[0-1]_800:400_um)
       )
