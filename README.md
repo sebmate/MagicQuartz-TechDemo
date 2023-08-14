@@ -9,7 +9,9 @@ This repository contains an open source hardware design of a turntable speedbox 
 * An [OpenSCAD](https://openscad.org) model that can be used for generating a 3D-printable enclosure.
 * A [KiCad](https://www.kicad.org) design for the mainboard, comprising schematic and PCB.
 
-The speedbox implements a simple AC power inverter based on a class-D audio amplifier and a toroidal transformer to step-up the voltage. The speed of the record player is controlled by changing the generated AC frequency. This enables electronic switching between the standard record speeds (16, 33, 45, and 78 RPM) and real-time speed correction using an optical sensor. Note that this approach only works for turntables with AC motor. The hardware design supports the most important features of MagicQuartz version 1.00, including the "Advanced Power Management" (APM).
+The speedbox implements a simple AC power inverter based on a class-D audio amplifier and a toroidal transformer to step-up the voltage. The speed of the record player is controlled by changing the generated AC frequency. This enables electronic switching between the standard record speeds (16, 33, 45, and 78 RPM) and real-time speed correction using an optical sensor. Note that this approach only works for turntables with AC motor.
+
+The device supports the most important features of MagicQuartz version 1.0 "Phoenix", including the "Advanced Power Management" (APM). However, it lacks standby for the LCD backlight and fans and it does not implement hardware-side pop supression.
 
 ## Licensing
 
@@ -80,7 +82,7 @@ The components to be used should be easily identifiable from the OpenSCAD and Ki
 * **AC Voltmeter:** Type "YB27A", 60-300V AC, removed from its original housing. Note that the voltmeter is live and there is a risk of electric shock. If the wires need to be extended or replaced, make sure they have the proper voltage rating.
 * **Power Switch:** Type "KCDI-101".
 * **DC/DC Converter Boards:** Step-down voltage regulator boards based on the LM2596S (also see "Known Issues" below).
-* **Fuses**: Fuse 1 is covers the entire circuit and should be sized according to the implemented power rating. For example, if a 50VA transformer and a 24V power supply are used, a 2A fuse may be appropriate. Fuse 2 is used to protect the components on and connected to the "MEGA 2560 PRO" board, which draw approximately 100mA at 7.5V. Using a 125mA fast-acting fuse is therefore reasonable.
+* **Fuses**: Fuse 1 covers the entire circuit and should be sized according to the implemented power rating. For example, if a 50VA transformer and a 24V power supply are used, a 2A fuse may be appropriate. Fuse 2 is used to protect the components on and connected to the "MEGA 2560 PRO" board, which draw approximately 100mA at 7.5V. Using a 125mA fast-acting fuse is therefore reasonable.
 
 ![Amplifier Types](images/Amplifier-Types.png)
 
@@ -116,7 +118,7 @@ The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questiona
 The problem may be solved via these approaches:
 
 * **Simple and probably sufficient:** By replacing the AMS1117 with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (see data sheet), additional 10uF tantalum capacitors may need to be added to the input and output pins of the regulator. Such a modification based on an TS1117 is shown in this image: [images/TS1117-Modification.jpg](images/TS1117-Modification.jpg). Notice the two new yellow tantalum capacitors and the additional fuse (see below). The old AMS1117 is easily desoldered by applying excess fresh solder to the three pins, heating it up, and then wiping everything away. Carefully observe the polarity of the capacitors!
-* **More sophisticated:** By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The "crowbar circuit" may be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy). *Note: The crowbar circuit is currently work in progress and has not yet been tested. It may be added to future revisions of the mainboard.*
+* **More sophisticated:** By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The "crowbar circuit" may be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02/1.04). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy). Here is a picture of it mounted in the speedbox: [images/LittleJimmy.jpg](images/LittleJimmy.jpg). *Note: The crowbar circuit has been tested briefly and it works, but there is no long-term experience yet.*
 
 The fuse is actually only needed for the second solution, but there is nothing wrong with adding it in general. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse. As described above, as the circuit is drawing about 100mA at 7.5V, using a 125mA fast-acting fuse is reasonable.
 
