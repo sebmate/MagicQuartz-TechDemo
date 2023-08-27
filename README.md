@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository contains an open source hardware design of a turntable speedbox that is capable of running the proprietary [MagicQuartz](https://www.mate-labs.de/magicquartz) firmware. The hardware design consists of two parts:
+This repository contains an open source hardware design of a turntable speedbox that is capable of running the proprietary [MagicQuartz](https://www.mate-labs.de/magicquartz-en) firmware. The hardware design consists of two parts:
 
 * An [OpenSCAD](https://openscad.org) model that can be used for generating a 3D-printable enclosure.
 * A [KiCad](https://www.kicad.org) design for the mainboard, comprising schematic and PCB.
@@ -115,12 +115,13 @@ Here is a block diagram that provides an overview of all internal connections:
 
 The "MEGA 2560 PRO" board may use an "AMS1117" 5V voltage regulator of questionable quality (see [this](https://goughlui.com/2021/03/27/note-linear-regulator-woes-when-is-an-ams1117-not-an-ams1117) interesting blog post). The regulator may fail with a full or partial internal short and pass the input voltage (7.5V) to the rest of the circuit. This may not only damage the other components (including the ATmega2560), it may also increase the level of the sinusoidal signal generated. As a result, the inverter may generate excessive voltage and damage the turntable.
 
-The problem may be solved via these approaches:
+The problem can be overcome by replacing the AMS1117 by another "1117"-type regulator from a renowned manufacturer, such as the LM1117 by Texas Instruments or the TS1117 by Taiwan Semiconductor. Of course, the part should be purchased from a reputable electronics distributor. The old regulator can be desoldered easily by applying excess fresh solder to its three pins, heating everything up, and then wiping it away with the soldering iron.
 
-* **Simple and probably sufficient:** By replacing the AMS1117 with another "1117"-type regulator from a renowned manufacturer (e.g. LM1117 by Texas Instruments or TS1117 by Taiwan Semiconductor), purchased from a reputable electronics distributor. Depending on the regulator used (see data sheet), additional 10uF tantalum capacitors may need to be added to the input and output pins of the regulator. Such a modification based on an TS1117 is shown in this image: [images/TS1117-Modification.jpg](images/TS1117-Modification.jpg). Notice the two new yellow tantalum capacitors and the additional fuse (see below). The old AMS1117 is easily desoldered by applying excess fresh solder to the three pins, heating it up, and then wiping everything away. Carefully observe the polarity of the capacitors!
-* **More sophisticated:** By adding a "crowbar circuit" (see [this](https://circuitdigest.com/electronic-circuits/crowbar-circuit-diagram) link for an excellent description) and a fuse to the design to provide additional protection. The "crowbar circuit" may be supplied as a small piggyback board for the "MEGA 2560 PRO" board to provide compatibility with the current mainboard (Rev. 1.02/1.04). Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy). Here is a picture of it mounted in the speedbox: [images/LittleJimmy.jpg](images/LittleJimmy.jpg). *Note: The crowbar circuit has been tested briefly and it works, but there is no long-term experience yet.*
+Depending on the regulator, additional 10uF tantalum capacitors may need to be added to the input and output of the regulator (see data sheet). Such a modification based on an TS1117 is shown in this image: [images/TS1117-Modification.jpg](images/TS1117-Modification.jpg). Notice the two new yellow tantalum capacitors and the additional fuse (see below). Carefully observe the polarity of the capacitors!
 
-The fuse is actually only needed for the second solution, but there is nothing wrong with adding it in general. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse. As described above, as the circuit is drawing about 100mA at 7.5V, using a 125mA fast-acting fuse is reasonable.
+A more sophisticated (and probably over-the-top) solution is adding a crowbar circuit and a fuse to the design. The crowbar circuit can be supplied as a small piggyback board for the "MEGA 2560 PRO". Such an add-on is available here: [https://github.com/sebmate/LittleJimmy](https://github.com/sebmate/LittleJimmy). Here is a picture of it mounted in the speedbox: [images/LittleJimmy.jpg](images/LittleJimmy.jpg).
+
+The fuse is actually only needed for the crowbar circuit, but there is nothing wrong with adding it in general. The above block diagram and the rear panel of the enclosure have already been extended to incorporate this fuse. As described above, as the circuit is drawing about 100mA at 7.5V, using a 125mA fast-acting fuse is reasonable.
 
 ### LM2596S DC/DC Converter Boards
 
