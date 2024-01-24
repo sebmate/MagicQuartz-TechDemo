@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository contains an open source hardware design of a turntable speedbox that is capable of running the proprietary [MagicQuartz](https://www.mate-labs.de/magicquartz-en) firmware. The hardware design consists of two parts:
+This repository contains an open source hardware design of a turntable speedbox that is capable of running the proprietary [MagicQuartz](https://www.mate-labs.de/magicquartz) firmware. The hardware design consists of two parts:
 
 * An [OpenSCAD](https://openscad.org) model that can be used for generating a 3D-printable enclosure.
 * A [KiCad](https://www.kicad.org) design for the mainboard, comprising schematic and PCB.
