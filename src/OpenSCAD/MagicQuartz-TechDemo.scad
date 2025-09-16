@@ -30,13 +30,13 @@
 
 $fn=64;
 
-render_components = true; // Set this to false to generate the 3D-printable model, then press F6 to render and finally export the STL.
+render_components = false; // Set this to false to generate the 3D-printable model, then press F6 to render and finally export the STL.
 
-transparancy_cover = 0.5; // 0 = hidden, 0.5 = transparent, 1 = solid
+transparancy_cover = 0; // 0 = hidden, 0.5 = transparent, 1 = solid
 
-amplifier_type = 1; // Which amplifier to render (1 or 2)
+amplifier_type = 2; // Which amplifier to render (1 or 2)
 
-generate = 0; // Which part to render (0-10, see list below)
+generate = 2; // Which part to render (0-10, see list below)
 
 //  0 = Whole unit (for rendering only!)
 //  1 = Bottom plate
