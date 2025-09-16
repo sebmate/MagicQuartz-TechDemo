@@ -21,7 +21,7 @@ The information and files in this repository are provided under the [CERN-OHL-S 
 
 ### Safety & Disclaimer
 
-In the hardware designs presented here, great emphasis was put on safety. For example, the housing features active cooling and touch protection. It creates an IT network (Isolé Terre). The circuitry is equipped with safeguards against overcurrent and overvoltage (the latter with the LittleJimmy extension, see below). Finally, the MagicQuartz firmware implementes further safety measures in software (see documentation).
+In the hardware design presented here, great emphasis was put on safety. For example, the housing features active cooling and touch protection. It creates an IT network (Isolé Terre). The circuitry is equipped with safeguards against overcurrent and overvoltage (the latter with the LittleJimmy extension, see below). Finally, the MagicQuartz firmware implementes further safety measures in software (see documentation).
 
 However, the main purpose of this repository is to provide an easily reproducible, simple hardware design to demonstrate the capabilities of the MagicQuartz firmware (this is why it is called "TechDemo"). The design has not been formally tested for electrical safety, electromagnetic compatibility (EMC), or fire safety. If you build and/or operate the device, you do so at your own risk. If you do not have sufficient knowledge in electronics, please do not attempt to build and/or operate the device. Also pay close attention to section 6 of the [CERN-OHL-S v2](cern_ohl_s_v2.txt) license and the safety considerations below. Devices manufactured based on this design may not be suitable for end users.
 
