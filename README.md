@@ -1,39 +1,39 @@
-# MagicQuartz Technology Demonstration
+# MagicQuartz Turntable Speedbox
 
 ![MagicQuartz TechDemo Front Rendering](images/Rendering-Front.png)
 
 ## Introduction
 
-This repository contains an open source hardware design of a turntable speedbox that is capable of running the proprietary [MagicQuartz](https://www.mate-labs.de/magicquartz) firmware. The hardware design consists of two parts:
+This repository contains an open source hardware design of a turntable speedbox that is capable of running the [MagicQuartz](https://www.mate-labs.de/magicquartz) firmware. The hardware design consists of two parts:
 
 * An [OpenSCAD](https://openscad.org) model that can be used for generating a 3D-printable enclosure.
 * A [KiCad](https://www.kicad.org) design for the mainboard, comprising schematic and PCB.
 
-The speedbox implements a simple AC power inverter based on a class-D audio amplifier and a toroidal transformer to step-up the voltage. The speed of the record player is controlled by changing the generated AC frequency. This enables electronic switching between the standard record speeds (16, 33, 45, and 78 RPM) and real-time speed correction using an optical sensor. Note that this approach only works for turntables with AC motor.
+The speedbox implements an AC power inverter based on a class-D audio amplifier and a toroidal transformer to step-up the voltage. The speed of the record player is controlled by changing the generated AC frequency. This enables electronic switching between the standard record speeds (16, 33, 45, and 78 RPM) and real-time speed correction using an optical sensor. Note that this approach only works for turntables with AC motor. Optional voltage reduction can significantly reduce motor noise on synchronous motors.
 
-The device supports the most important features of MagicQuartz version 1.0 "Phoenix", including the "Advanced Power Management" (APM). However, it lacks standby for the LCD backlight and fans and it does not implement hardware-side pop supression.
+The device supports the most important features of MagicQuartz version 1.1x, "Sparrow", including the "Advanced Power Management" (APM). However, it lacks standby for the LCD backlight and fans and it does not implement hardware-side pop supression.
 
 ## Licensing
 
 The information and files in this repository are provided under the [CERN-OHL-S v2](cern_ohl_s_v2.txt) open source license (please click [here](https://ohwr.org/project/cernohl/wikis/Documents/CERN-OHL-version-2) for details).
 
-## Disclaimer
-
-The only purpose of this repository is to provide an easy-to-reproduce hardware design for demonstrating the capabilities of the MagicQuartz firmware. To date, the design has not been evaluated with respect to electrical safety, electromagnetic compliance (EMC), and fire safety. **Devices manufactured based on this design are not suitable for end users.**
-
-There are several serious dangers associated with building and operating this device. If you do not have sufficient knowledge, please do not attempt to build or operate the device. Note that the information in this repository intentionally does not constitute assembly instructions. Also pay close attention to section 6 of the [CERN-OHL-S v2](cern_ohl_s_v2.txt) license and the safety considerations below.
-
 ## Hardware Design
 
-### Safety Considerations
+### Safety & Disclaimer
+
+In the hardware designs presented here, great emphasis was put on safety. For example, the housing features active cooling and touch protection. It creates an IT network (Isolé Terre). The circuitry is equipped with safeguards against overcurrent and overvoltage (the latter with the LittleJimmy extension, see below). Finally, the MagicQuartz firmware implementes further safety measures in software (see documentation).
+
+However, the main purpose of this repository is to provide an easily reproducible, simple hardware design to demonstrate the capabilities of the MagicQuartz firmware (this is why it is called "TechDemo"). The design has not been formally tested for electrical safety, electromagnetic compatibility (EMC), or fire safety. If you build and/or operate the device, you do so at your own risk. If you do not have sufficient knowledge in electronics, please do not attempt to build and/or operate the device. Also pay close attention to section 6 of the [CERN-OHL-S v2](cern_ohl_s_v2.txt) license and the safety considerations below. Devices manufactured based on this design may not be suitable for end users.
+
+The following is a list of safety considerations that you should keep in mind:
 
 * The device is capable of generating high voltage and may cause fire and/or serious injury, including death.
 * The device switches high currents using pulse width modulation (PWM), which may cause interference with other electronic devices or radio equipment.
-* The device creates an [IT network (isolé-terre)](https://en.wikipedia.org/wiki/Earthing_system#IT_network). This has implications on the number of appliances (i.e. motors or turntables) and their insulation type to be safely connected to the device.
-* Be very careful when performing measurements! Do not attempt to measure the high-voltage side of the transformer using an oscilloscope! There is no need to do this as the signal can be fully verified on the low-voltage side. In this regard, also note that the digital amplifier's negative outputs are not connected to ground. There is a serious risk of damaging the oscilloscope and other equipment when performing measurements while the circuit is grounded, e.g. over the Arduino's USB port and a PC. Use galvanic isolators where applicable.
-* There is a serious risk that the device damages connected components. Examples are strobe lamps, which may be damaged easily by voltage spikes or excessive voltage, or fixed-frequency AC motors that rely on phase shift capacitors. There is also a risk that the PWM carrier signal passes through the audio path of a stereo system and damages the speakers. In addition, note that although software-side pop suppression is used, a voltage spike typically occurs when the device is turned on. For this reason, the device should be turned on before the turntable is turned on.
-* The individual prefabricated modules (especially the amplifier, the step-down converters and the microcontroller board) may contain electronic components from different manufacturers and of varying quality (see section "Known Issues"). In the event of a hardware failure, this can lead to further unexpected consequential damage. The assembled device should therefore never be operated unattended.
-* Note that the mechanical, electrical, and chemical properties of 3D-printed components may change or deteriorate over time.
+* Be careful when performing measurements. There is (generally) no need to measure the generated sine signal on the high-voltage side of the transformer using an oscilloscope, as this can also be done on the low-voltage side. In this regard, also note that the digital amplifier's negative outputs are not connected to ground. There is a risk of damaging the oscilloscope and other equipment when performing measurements while the circuit is grounded, e.g. over the Arduino's USB port and a PC.
+* A fully insulated power supply must be used to create an IT network (Isolé Terre).
+* There is a small but potential risk that the speedbox could damage connected devices due to overvoltage. This may happen, for example, if the speedbox is improperly set-up or if the connected device contains sensitive electronics. Also note that although software-based pop suppression is implemented in the MagicQuartz firmware, a voltage spike may occur when the device is switched on. For this reason, the speedbox should be switched on before the turntable. Note that no damage has been reported to date.
+* The individual prefabricated modules (especially the amplifier, the step-down converters and the microcontroller board) may contain electronic components from different manufacturers and of varying quality (see section "Known Issues"). In the event of a hardware failure, this could lead to further damage. The assembled device should therefore never be operated unattended.
+* Note that the mechanical, electrical, and chemical properties of 3D-printed parts may change or deteriorate over time.
 
 ### OpenSCAD 3D Model
 
